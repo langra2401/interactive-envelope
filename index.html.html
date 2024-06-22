@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2024 by langra2401 (http://jsbin.com/hekaror/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Envelope</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #00008b;
+            overflow: hidden;
+            font-family: 'Dancing Script', cursive;
+        }
+        .envelope {
+            position: relative;
+            width: 600px; /* Adjusted width to 600px */
+            height: 250px;
+            background-color: #fff;
+            border: 2px solid #000;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            cursor: pointer;
+            text-align: center;
+            padding-top: 100px;
+        }
+        .stamp {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            background-color: red;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+        }
+        .letter {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 90%;
+            background-color: #fff;
+            border: 1px solid #000;
+            border-radius: 5px;
+            transition: top 0.5s ease;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+        .letter textarea {
+            width: 100%;
+            height: 100%;
+            border: none;
+            resize: none;
+            font-family: 'Dancing Script', cursive;
+            font-size: 18px;
+        }
+        .footer-text {
+            position: absolute;
+            bottom: 30px;
+            width: 100%;
+            font-weight: bold;
+        }
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            animation: confetti-fall 4s linear infinite;
+        }
+        @keyframes confetti-fall {
+            0% {transform: translateY(-100vh) rotate(0deg);}
+            60% {transform: translateY(100vh) rotate(720deg);}
+            100% {transform: translateY(200vh) rotate(720deg);}
+        }
+    </style>
+</head>
+<body>
+    <div class="envelope" id="envelope">
+        <div class="stamp" id="stamp">Press Me</div>
+        <div class="letter" id="letter">
+            <textarea readonly id="letter-text">AND SHE HAS GRADUATEDDD!!! I cannot tell you how proud i am. Ok close the envelope and open it again cause CONFETTIIIII. Ok you're back now and congratulations aya on being the valedictorian and having the most personal speech dedicated to all your friends and teachers. And yeah you're welcome for the best input on it and yes you're welcome that i added the most alla ideas to the speech but I cant take all the credit, you deserve some too.
+
+I wish I could be there to see you deliver it in person and cheer you on every step of the way, from wearing the grown and looking absolutely beautiful to doing a catwalk onto the stage, speaking your heart out to everyone in the room and then finally getting the degree you've worked more than half your life for. With this officially being the most important year and the most stressful year you've been through, all i can say is that you're one of the strongest people i know. physically you a btch but mentally i respect the fuck out of you.
+
+Holding that degree finally must've made your heart pound seeing your name properly spelled out. I'm not going to talk about the future cause i know that whatever happens you're always going to find a way to make the best out of it and you're going to follow what you love no matter how difficult the choice might be. the credit goes to being persistent AKA dheet. I know you got this and we are all going to be here by your side to help you when you turn autistic don't worry.
+
+That little child with the biggest eyes, the worst haircut and the most golu molu cheeks would be so proud of you today to see what all you have accomplished and how your amma abba raise their heads just a little higher when they hear the name Sarah Qadeer Kanwar called on stage. All that they've sacrifices being worth it when they see you smiling and looking at them with the look of "yeah i did this for you". You've made them so proud that aunty wont even full on baisti you for a few days. InshAllah.(repeat it)
+
+I know things could have been a lot better in some cases but you made them work regardless and that's something to put on your CV. I remember when last year after my graduation i was out the whole night and you tried to stay up and when i did get home you had passed out. and when i read the letter you gave me, h2o was fucking my eyes up and all i could think about was how lucky i was. Am. I know not everything is going to go the way we intent them to be but if there's one thing i know that will never change, its that you're the most magical person, daughter, sister, khala, maid, friend and best friend anyone could ask for. i hope your magic only grows from here and I'm sure it will spread onto anyone you encounter. So, to the valedictorian of 2024, my best friend and much more, Congratulations on the next chapter of your life. ily. CONFETTIIIII
+
+PS. Zee</textarea>
+        </div>
+        <div class="footer-text">To The Valedictorian of 2024</div>
+    </div>
+
+    <script>
+        let confettiInterval;
+        let confettiTimeout;
+        let isConfettiActive = false;
+
+        document.getElementById('stamp').addEventListener('click', function(event) {
+            event.stopPropagation();
+            const answer = prompt("Solve the equation 3x^2 + x - 5 = 0. Provide one solution rounded to 2 decimal places:");
+            if (answer === "1.14" || answer === "-1.14") {
+                const envelope = document.getElementById('envelope');
+                const letter = document.getElementById('letter');
+                const letterText = document.getElementById('letter-text');
+                envelope.style.height = '400px';
+                letter.style.top = '10%';
+                letterText.removeAttribute('readonly');
+                showConfetti();
+                clearTimeout(confettiTimeout);
+                confettiTimeout = setTimeout(() => {
+                    clearInterval(confettiInterval);
+                    isConfettiActive = false;
+                }, 4000);
+            } else {
+                alert("Incorrect answer. Try again.");
+            }
+        });
+
+        document.getElementById('envelope').addEventListener('click', function(event) {
+            if (!event.target.closest('.letter')) {
+                const envelope = document.getElementById('envelope');
+                const letter = document.getElementById('letter');
+                const letterText = document.getElementById('letter-text');
+                envelope.style.height = '250px';
+                letter.style.top = '100%';
+                letterText.setAttribute('readonly', 'readonly');
+                if (isConfettiActive) {
+                    let confettiElements = document.querySelectorAll('.confetti');
+                    let confettiCount = confettiElements.length;
+                    let step = confettiCount / 10;
+                    let interval = setInterval(() => {
+                        if (confettiCount > 0) {
+                            for (let i = 0; i < step && confettiCount > 0; i++) {
+                                confettiElements[confettiCount - 1].remove();
+                                confettiCount--;
+                            }
+                        } else {
+                            clearInterval(interval);
+                            isConfettiActive = false;
+                        }
+                    }, 100);
+                }
+            }
+        });
+
+        function showConfetti() {
+            isConfettiActive = true;
+            confettiInterval = setInterval(() => {
+                for (let i = 0; i < 30; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    const side = Math.random();
+                    if (side < 0.50) {
+                        confetti.style.left = Math.random() * window.innerWidth + 'px';
+                        confetti.style.top = '0px';
+                    } else if (side < 0.75) {
+                        confetti.style.left = '0px';
+                        confetti.style.top = Math.random() * window.innerHeight + 'px';
+                    } else {
+                        confetti.style.left = window.innerWidth + 'px';
+                        confetti.style.top = Math.random() * window.innerHeight + 'px';
+                    }
+                    confetti.style.backgroundColor = getRandomColor();
+                    confetti.style.animationDelay = Math.random() + 's';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    document.body.appendChild(confetti);
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 4000);
+                }
+            }, 100);
+        }
+
+        function getRandomColor() {
+            const colors = ['#FFC107', '#FF5722', '#4CAF50', '#03A9F4', '#E91E63'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+    </script>
+<script id="jsbin-javascript">
+
+onload = () => {
+  const c = setTimeout(() => {
+    document.body.classList.remove("not-loaded");
+    clearTimeout(c);
+  }, 1000);
+};
+
+</script>
+</body>
+</html>
